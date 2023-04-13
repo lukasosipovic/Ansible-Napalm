@@ -1,0 +1,42 @@
+! Command: show running-config
+! device: SW2 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+username ******** privilege 15 secret sha512 $6$8ZIWVxZq8fK8S9Ot$oMWaLwoc4gAudx30YfrR/YmeRVl.NPvJD9hbX6Sf0MgvnobxAltDYAdof8eVOMg91J6LOBpP5oI.N6jEUa0wP0
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model ribd
+!
+hostname SW2
+!
+spanning-tree mode mstp
+!
+management api http-commands
+   no shutdown
+!
+interface Ethernet1
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Management1
+   ip address dhcp
+!
+no ip routing
+!
+end

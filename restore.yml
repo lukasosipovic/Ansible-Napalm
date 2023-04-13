@@ -1,0 +1,42 @@
+---
+
+- name: "PLAY 1: Gather local host Time"
+  hosts: localhost
+  tasks:
+    - name: "TASK 1 of PLAY 1: Gather Local Time"
+      ansible.builtin.setup:
+        filter:
+          - "ansible_date_time"
+
+    - name: "TASK 2 of PLAY 1: Save Information as Variable"
+      set_fact:
+        TD: "{{ansible_date_time.date }}"
+
+- name: "PLAY 2: Restoring Configuration"
+  hosts: all
+  connection: network_cli
+  tasks:
+    - name: "TASK 1 of PLAY 2: Create a DIFF directory"
+      file:
+        path: "diff/{{hostvars.localhost.TD}}/{{ inventory_hostname }}"
+        state: directory
+    - name: "TASK 2 of PLAY 2: Use NAPALM to Restore Backup Configs"
+      napalm_install_config:
+        hostname: "{{ ansible_host }}"
+        username: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        dev_os: "{{ napalm_platform }}"
+        config_file: "{{inventory_hostname}}-running-config.txt"
+        commit_changes: true
+        replace_config: true
+        get_diffs: true
+        diff_file: "diff/{{hostvars.localhost.TD}}/{{ inventory_hostname }}/{{ inventory_hostname }}-diffs.txt"
+        optional_args:
+          global_delay_factor: 2
+      register: output
+
+    - name: "TASK 3 of PLAY 2: Printing OUTPUT"
+      debug:
+        msg: "{{ output }}"
+
+  

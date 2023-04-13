@@ -1,0 +1,19 @@
+---
+
+- name: "Get Information with NAPALM"
+  hosts: all
+  connection: network_cli
+
+  tasks:
+    - name: "Retrieve Information"
+      napalm_get_facts:
+        hostname: "{{ ansible_host }}"
+        username: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        dev_os: "{{ napalm_platform }}"
+        filter: ["vlans"]
+      register: napalm_output
+
+    - name: "Printing Output"
+      debug:
+        msg: "{{ napalm_output.ansible_facts.napalm_vlans }}" 

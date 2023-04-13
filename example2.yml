@@ -1,0 +1,19 @@
+---
+
+- name: "Get Information with NAPALM"
+  hosts: all
+  connection: network_cli
+
+  tasks:
+    - name: "Retrieve Information"
+      napalm_validate:
+        hostname: "{{ ansible_host }}"
+        username: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        dev_os: "{{ napalm_platform }}"
+        validation_file: "{{inventory_hostname}}-vlans.yml"
+      register: napalm_output
+
+    - name: "Printing Output"
+      debug:
+        msg: "{{ napalm_output }}" 

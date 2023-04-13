@@ -1,0 +1,6 @@
+---
+- get_facts:
+    hostname: SW1
+    model: IOSv
+    serial_number: 9NFJLVT0109
+    vendor: Cisco

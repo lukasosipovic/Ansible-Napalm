@@ -1,0 +1,1 @@
+-username arista privilege 15 secret sha512 $6$8ZIWVxZq8fK8S9Ot$oMWaLwoc4gAudx30YfrR/YmeRVl.NPvJD9hbX6Sf0MgvnobxAltDYAdof8eVOMg91J6LOBpP5oI.N6jEUa0wP0

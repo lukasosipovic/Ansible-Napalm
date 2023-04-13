@@ -1,0 +1,22 @@
+---
+
+- name: "Testing: RestConf"
+  hosts: R1
+  connection: local
+  tasks:
+    - name: "TASK 1 - pull some information"
+      uri:
+        url: "https://{{ ansible_host }}/restconf/data/native/router"
+        user: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        method: GET
+        return_content: true
+        headers:
+          Accept: "application/yang-data+json"
+        validate_certs: false
+      register: result
+
+
+    - name: "Printing Output"
+      debug:
+        msg: "{{ result.content}}"
